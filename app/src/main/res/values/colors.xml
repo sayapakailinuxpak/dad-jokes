@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="alice_blue">#FFD9EBFC</color>
+    <color name="dodger_blue">#FF1C8EFA</color>
+    <color name="mimi_pink">#FFFCD9E1</color>
+    <color name="razzmatazz">#FFFA1C6C</color>
+    <color name="pale_purple">#FFF1D9FC</color>
+    <color name="amethyst">#FF9D4EDD</color>
+    <color name="azure">#FF147CDD</color>
+    <color name="shocking_pink">#FFEC34C3</color>
+    <color name="raisin_black">#FF272325</color>
 </resources>

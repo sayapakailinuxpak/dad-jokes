@@ -1,22 +1,26 @@
-package com.eldisprojects.dadjokes.ui.theme
+package com.eldisprojects.dadjokes.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import com.eldisprojects.dadjokes.R
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Night,
+    primaryVariant = Night,
+    secondary = Color.White,
+    background = Night,
+    surface = EerieBlack2
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
+    primary = Color(0xFFFFFFFF),
+    primaryVariant = Color(0xFFFFFFFF),
+    secondary = EerieBlack
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -37,7 +41,7 @@ fun DadJokesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = myTypography,
         shapes = Shapes,
         content = content
     )
