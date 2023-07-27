@@ -72,6 +72,7 @@ class HomeViewModel : ViewModel(), ContainerHost<HomeUiState, UIComponent> {
         downloadDadJokeAsImage.execute(context, jokeId)
     }
 
+
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG, "onCleared: ")

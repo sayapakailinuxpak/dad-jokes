@@ -17,4 +17,8 @@
     <color name="azure">#FF147CDD</color>
     <color name="shocking_pink">#FFEC34C3</color>
     <color name="raisin_black">#FF272325</color>
+
+    <color name="eerie_black">#FF222222</color>
+    <color name="gray">#FF828282</color>
+    <color name="anti_flash_white">#FFF0F0F0</color>
 </resources>
