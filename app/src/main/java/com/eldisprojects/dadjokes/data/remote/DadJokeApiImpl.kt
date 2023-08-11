@@ -8,12 +8,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
+import android.util.Log
 import androidx.core.net.toUri
 import com.eldisprojects.dadjokes.data.model.Joke
+import com.eldisprojects.dadjokes.data.model.JokeResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
+import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
@@ -22,14 +25,17 @@ import io.ktor.http.path
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+private const val TAG = "DadJokeApiImpl"
 class DadJokeApiImpl(
     private val httpClient: HttpClient
 ) : DadJokeAPI {
     override suspend fun fetchRandomDadJoke(): Joke {
-        return httpClient.get {
-            url("https://icanhazdadjoke.com/")
-        }.body<Joke>().also {
-            Joke(it.id, it.joke, it.status)
+        return withContext(Dispatchers.IO) {
+            httpClient.get {
+                url("https://icanhazdadjoke.com/")
+            }.body<Joke>().also {
+                Joke(it.id, it.joke, it.status)
+            }
         }
     }
 
@@ -46,8 +52,16 @@ class DadJokeApiImpl(
         return downloadManager.enqueue(request)
     }
 
-    override suspend fun searchDadJokes(term: String): List<Joke> {
-        TODO("Not yet implemented")
+    override suspend fun searchDadJokes(term: String): JokeResult {
+        Log.d(TAG, "searchDadJokes: Impl $term")
+        return withContext(Dispatchers.IO) {
+            httpClient.get("https://icanhazdadjoke.com/search") {
+                url {
+                    parameter("term", term)
+                    parameter("limit", 30)
+                }
+            }.body<JokeResult>()
+        }
     }
 
     override fun copyCurrentJokeToClipboard(context: Context, jokeToCopied: String): Boolean{
@@ -56,5 +70,4 @@ class DadJokeApiImpl(
         clipboardManager.setPrimaryClip(clipData)
         return clipboardManager.hasPrimaryClip()
     }
-
 }

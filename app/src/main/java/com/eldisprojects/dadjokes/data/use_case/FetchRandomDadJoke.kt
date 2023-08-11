@@ -14,7 +14,7 @@ class FetchRandomDadJoke(
     private val dadJokeApi: DadJokeAPI
 ) {
     fun execute(): Flow<ResponseState<Joke>> {
-        Log.d(TAG, "execute:")
+//        Log.d(TAG, "execute:")
         return flow {
             emit(value = ResponseState.Loading(true))
             try {

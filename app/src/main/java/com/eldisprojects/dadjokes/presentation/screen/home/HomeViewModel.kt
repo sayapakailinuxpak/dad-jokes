@@ -12,7 +12,11 @@ import com.eldisprojects.dadjokes.data.remote.UIComponent
 import com.eldisprojects.dadjokes.data.use_case.CopyCurrentJokeToClipboard
 import com.eldisprojects.dadjokes.data.use_case.DownloadDadJokeAsImage
 import com.eldisprojects.dadjokes.data.use_case.FetchRandomDadJoke
+import com.eldisprojects.dadjokes.data.use_case.SearchDadJokes
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -30,6 +34,7 @@ class HomeViewModel : ViewModel(), ContainerHost<HomeUiState, UIComponent> {
     private val fetchRandomDadJoke = FetchRandomDadJoke(DadJokeAPI.provideDadJokeAPI)
     private val copyCurrentJokeToClipboard = CopyCurrentJokeToClipboard(DadJokeAPI.provideDadJokeAPI)
     private val downloadDadJokeAsImage = DownloadDadJokeAsImage(DadJokeAPI.provideDadJokeAPI)
+    private val searchDadJokes = SearchDadJokes(DadJokeAPI.provideDadJokeAPI)
 
     override val container: Container<HomeUiState, UIComponent> = container<HomeUiState, UIComponent>(initialState = HomeUiState())
     init {

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.eldisprojects.dadjokes.R
 
 @Composable
-fun SearchBar(searchText: String, valueChange: (String) -> Unit, focusManager: FocusManager) {
+fun SearchBar(searchText: String, valueChange: (String) -> Unit, focusManager: FocusManager, onSearch: () -> Unit = {}) {
     OutlinedTextField(
         value = searchText,
         onValueChange = valueChange,
@@ -51,6 +51,7 @@ fun SearchBar(searchText: String, valueChange: (String) -> Unit, focusManager: F
         keyboardActions = KeyboardActions(
             onSearch = {
                 focusManager.clearFocus()
+                onSearch()
             },
         )
     )

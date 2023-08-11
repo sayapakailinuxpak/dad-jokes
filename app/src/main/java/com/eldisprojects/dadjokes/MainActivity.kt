@@ -28,28 +28,28 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel by viewModels<HomeViewModel>()
+//        val viewModel by viewModels<HomeViewModel>()
         setContent {
 //            val state = viewModel.collectAsState()
             DadJokesTheme {
                 // A surface container using the 'background' color from the theme
 //                SplashScreen()
 //                HomeScreen(viewModel)
-                DadJokesApp(viewModel)
+                DadJokesApp()
             }
         }
     }
 }
 
 @Composable
-fun DadJokesApp(viewModel: HomeViewModel) {
+fun DadJokesApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = DadJokesAppRoute.Home.name
     ) {
         composable(route = DadJokesAppRoute.Home.name) {
-            HomeScreen(viewModel = viewModel)
+            HomeScreen()
         }
     }
 }
