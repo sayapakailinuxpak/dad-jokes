@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,9 +56,12 @@ import com.eldisprojects.dadjokes.presentation.components.ActionButton
 import com.eldisprojects.dadjokes.presentation.components.BottomSheet
 import com.eldisprojects.dadjokes.presentation.components.DownloadConfirmationDialog
 import com.eldisprojects.dadjokes.presentation.components.JokeList
+import com.eldisprojects.dadjokes.presentation.components.JokeResultDialog
 import com.eldisprojects.dadjokes.presentation.components.LoadingBar
 import com.eldisprojects.dadjokes.presentation.components.NoDataSearchResultImage
 import com.eldisprojects.dadjokes.presentation.components.SearchBar
+import com.eldisprojects.dadjokes.presentation.screen.result.ResultUiState
+import com.eldisprojects.dadjokes.presentation.screen.result.ResultViewModel
 import com.eldisprojects.dadjokes.presentation.screen.search.SearchUiState
 import com.eldisprojects.dadjokes.presentation.screen.search.SearchViewModel
 import kotlinx.coroutines.launch
@@ -70,9 +74,12 @@ private const val TAG = "HomeScreen"
 fun HomeScreen() {
     val homeViewModel: HomeViewModel = viewModel()
     val searchViewModel: SearchViewModel = viewModel()
+    val resultViewModel: ResultViewModel = viewModel()
     val homeUiState: State<HomeUiState> = homeViewModel.collectAsState()
     val searchUiState: State<SearchUiState> = searchViewModel.collectAsState()
+    val resultUiState:  State<ResultUiState> = resultViewModel.collectAsState()
     var openDialog by remember { mutableStateOf(value = false) }
+    var showDialog by remember { mutableStateOf(value = false) }
     var searchText by remember { mutableStateOf(value = "") }
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden, confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded})
     val context = LocalContext.current
@@ -85,6 +92,7 @@ fun HomeScreen() {
             sheetState.hide()
         }
     }
+
 
     Column(
         modifier = Modifier
@@ -110,12 +118,11 @@ fun HomeScreen() {
             LaunchedEffect(key1 = searchText, block = {
                 searchViewModel.searchDadJokes(term = searchText)
             })
-//            searchViewModel.searchDadJokes(term = searchText)
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .border(width = 1.dp, color = Color.Magenta)
                     .padding(top = 24.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -126,19 +133,23 @@ fun HomeScreen() {
                 if (searchUiState.value.isLoading) {
                     LoadingBar()
                 } else {
-                    JokeList(jokes = searchUiState.value.jokes)
+                    JokeList(
+                        jokes = searchUiState.value.jokes,
+                        onJokeItemClick = { jokeId: String ->
+                            resultViewModel.getJokeById(jokeId)
+                            showDialog = true
+                        }
+                    )
                 }
 
             }
-
         }
 
         if (searchText == "") {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
-                    .border(1.dp, Color.Black),
+                    .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -181,7 +192,6 @@ fun HomeScreen() {
                                     if (Build.VERSION.SDK_INT <= 32) {
                                         Toast.makeText(context, "Joke Copied", Toast.LENGTH_SHORT).show()
                                     }
-
                                 }
                             }
                         )
@@ -245,6 +255,29 @@ fun HomeScreen() {
         }
     }
 
+    if (showDialog) {
+        if (resultUiState.value.joke !== null) {
+            JokeResultDialog(
+                joke = resultUiState.value.joke!!,
+                showDialog = showDialog,
+                onDismiss = {showDialog = false},
+                onCopy = {
+                    if (homeViewModel.copyCurrentJokeToClipboard(context, jokeToCopied = resultUiState.value.joke!!.joke)) {
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                            Toast.makeText(context, "Joke Copied!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                },
+                onDownload = {
+                    openDialog = true
+                }
+            )
+        } else {
+            if (resultUiState.value.isLoading) {
+                JokeResultDialog(joke = Joke(id = "-1", joke = "Loading ....", status = 400), showDialog = showDialog, onDismiss = {showDialog = false})
+            }
+        }
+    }
 
     BottomSheet(sheetState = sheetState)
 
@@ -260,6 +293,7 @@ fun HomeScreen() {
             openDialog = false
         }
     )
+
 
     homeViewModel.collectSideEffect(sideEffect = { uiComponent ->
         when (uiComponent) {

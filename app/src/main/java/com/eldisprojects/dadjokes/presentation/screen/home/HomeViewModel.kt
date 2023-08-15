@@ -12,6 +12,7 @@ import com.eldisprojects.dadjokes.data.remote.UIComponent
 import com.eldisprojects.dadjokes.data.use_case.CopyCurrentJokeToClipboard
 import com.eldisprojects.dadjokes.data.use_case.DownloadDadJokeAsImage
 import com.eldisprojects.dadjokes.data.use_case.FetchRandomDadJoke
+import com.eldisprojects.dadjokes.data.use_case.GetJokeById
 import com.eldisprojects.dadjokes.data.use_case.SearchDadJokes
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
@@ -34,7 +35,7 @@ class HomeViewModel : ViewModel(), ContainerHost<HomeUiState, UIComponent> {
     private val fetchRandomDadJoke = FetchRandomDadJoke(DadJokeAPI.provideDadJokeAPI)
     private val copyCurrentJokeToClipboard = CopyCurrentJokeToClipboard(DadJokeAPI.provideDadJokeAPI)
     private val downloadDadJokeAsImage = DownloadDadJokeAsImage(DadJokeAPI.provideDadJokeAPI)
-    private val searchDadJokes = SearchDadJokes(DadJokeAPI.provideDadJokeAPI)
+    private val getJokeById = GetJokeById(DadJokeAPI.provideDadJokeAPI)
 
     override val container: Container<HomeUiState, UIComponent> = container<HomeUiState, UIComponent>(initialState = HomeUiState())
     init {
@@ -76,6 +77,8 @@ class HomeViewModel : ViewModel(), ContainerHost<HomeUiState, UIComponent> {
     fun downloadDadJokeAsImage(context: Context, jokeId: String) {
         downloadDadJokeAsImage.execute(context, jokeId)
     }
+
+
 
 
     override fun onCleared() {

@@ -17,6 +17,8 @@ interface DadJokeAPI {
     suspend fun searchDadJokes(term: String): JokeResult
     fun copyCurrentJokeToClipboard(context: Context, jokeToCopied: String): Boolean
 
+    suspend fun getJokeById(jokeId: String): Joke
+
     companion object {
         private val httpClient = HttpClient(engineFactory = Android) {
             install(plugin = ContentNegotiation) {

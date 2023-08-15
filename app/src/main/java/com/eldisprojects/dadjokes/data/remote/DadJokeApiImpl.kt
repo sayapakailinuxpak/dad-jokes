@@ -70,4 +70,12 @@ class DadJokeApiImpl(
         clipboardManager.setPrimaryClip(clipData)
         return clipboardManager.hasPrimaryClip()
     }
+
+    override suspend fun getJokeById(jokeId: String): Joke {
+        return withContext(Dispatchers.IO) {
+            httpClient.get {
+                url("https://icanhazdadjoke.com/j/$jokeId")
+            }.body()
+        }
+    }
 }

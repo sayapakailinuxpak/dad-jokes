@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.eldisprojects.dadjokes.data.remote.DadJokeAPI
 import com.eldisprojects.dadjokes.data.remote.ResponseState
 import com.eldisprojects.dadjokes.data.remote.UIComponent
+import com.eldisprojects.dadjokes.data.use_case.GetJokeById
 import com.eldisprojects.dadjokes.data.use_case.SearchDadJokes
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.catch
@@ -25,7 +26,6 @@ private const val TAG = "SearchViewModel"
 class SearchViewModel : ViewModel(), ContainerHost<SearchUiState, UIComponent>{
     override val container: Container<SearchUiState, UIComponent> = container(initialState = SearchUiState())
     private val searchDadJokes = SearchDadJokes(DadJokeAPI.provideDadJokeAPI)
-
 //    init {
 //        searchDadJokes
 //    }
@@ -64,4 +64,8 @@ class SearchViewModel : ViewModel(), ContainerHost<SearchUiState, UIComponent>{
             }
         }
     }
+
+
+
+
 }
