@@ -21,3 +21,4 @@ val ShockingPink = Color(0xFFEC34C3)
 val Night = Color(0xFF0B090A)
 val RaisinBlack = Color(0xFF272325)
 val EerieBlack2 = Color(0xFF1D1B1C)
+

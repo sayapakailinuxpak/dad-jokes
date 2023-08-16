@@ -9,15 +9,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.eldisprojects.dadjokes.R
 
-private val DarkColorPalette = darkColors(
+val DarkColorPalette = darkColors(
     primary = Night,
     primaryVariant = Night,
     secondary = Color.White,
     background = Night,
     surface = EerieBlack2
 )
-
-private val LightColorPalette = lightColors(
+val LightColorPalette = lightColors(
     primary = Color(0xFFFFFFFF),
     primaryVariant = Color(0xFFFFFFFF),
     secondary = EerieBlack

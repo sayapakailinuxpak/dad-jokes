@@ -4,6 +4,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -37,7 +39,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
@@ -97,7 +102,9 @@ fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp)
+//            .padding(horizontal = 20.dp)
+            .background(color = MaterialTheme.colors.background)
+            .clipToBounds()
 //            .border(width = 1.dp, color = Color.Black)
         ,
         verticalArrangement = verticalArrangementState,
@@ -123,7 +130,7 @@ fun HomeScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(top = 24.dp),
+                    .padding(top = 24.dp, start = 20.dp, end = 20.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -149,7 +156,8 @@ fun HomeScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .weight(1f)
+                    .padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -157,6 +165,7 @@ fun HomeScreen() {
                     text = stringResource(id = R.string.random_joke_title),
                     style = MaterialTheme.typography.subtitle1,
                     textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.onBackground,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(32.dp))
@@ -171,6 +180,7 @@ fun HomeScreen() {
                         fontWeight = FontWeight.Medium,
                         lineHeight = 28.sp,
                         textAlign = TextAlign.Start,
+                        color = MaterialTheme.colors.onBackground,
                         modifier = Modifier.padding(horizontal = 32.dp)
                     )
                 }
@@ -230,8 +240,8 @@ fun HomeScreen() {
             }
 
             FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.onBackground,
-                contentColor = MaterialTheme.colors.background,
+                backgroundColor = if (isSystemInDarkTheme()) Color.White else colorResource(id = R.color.eerie_black),
+//                contentColor = if (isSystemInDarkTheme()) colorResource(id = R.color.azure) else Color.White,
                 elevation = FloatingActionButtonDefaults.elevation(
                     defaultElevation = 0.dp,
                     pressedElevation = 0.dp,
@@ -244,12 +254,13 @@ fun HomeScreen() {
                     }
                 },
                 modifier = Modifier
-                    .padding(bottom = 20.dp)
+                    .padding(bottom = 20.dp, end = 20.dp)
                     .size(40.dp),
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.question_icon),
-                    contentDescription = null
+                    contentDescription = null,
+                    colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(color = Color.Black) else ColorFilter.tint(color = Color.White)
                 )
             }
         }

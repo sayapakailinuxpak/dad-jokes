@@ -1,5 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+    <style name="Theme.DadJokes" parent="android:Theme.Material.Light.NoActionBar">
+<!--                <item name="android:windowTranslucentStatus">false</item>-->
+<!--        <item name="android:windowLightStatusBar">false</item>-->
+<!--        <item name="android:fitsSystemWindows">true</item>-->
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+    </style>
     <style name="Base.Theme.DadJokes" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
