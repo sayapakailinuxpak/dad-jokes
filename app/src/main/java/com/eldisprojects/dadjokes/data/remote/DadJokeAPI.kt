@@ -1,11 +1,9 @@
 package com.eldisprojects.dadjokes.data.remote
 
 import android.content.Context
-import android.graphics.Bitmap
 import com.eldisprojects.dadjokes.data.model.Joke
 import com.eldisprojects.dadjokes.data.model.JokeResult
-import com.eldisprojects.dadjokes.data.use_case.CopyCurrentJokeToClipboard
-import io.ktor.client.*
+import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json

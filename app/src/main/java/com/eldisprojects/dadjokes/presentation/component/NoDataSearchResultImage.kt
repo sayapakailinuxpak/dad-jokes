@@ -1,4 +1,4 @@
-package com.eldisprojects.dadjokes.presentation.components
+package com.eldisprojects.dadjokes.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

@@ -6,7 +6,6 @@ import com.eldisprojects.dadjokes.data.remote.DadJokeAPI
 import com.eldisprojects.dadjokes.data.remote.ResponseState
 import com.eldisprojects.dadjokes.data.remote.UIComponent
 import com.eldisprojects.dadjokes.data.use_case.GetJokeById
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+
     <color name="alice_blue">#FFD9EBFC</color>
     <color name="dodger_blue">#FF1C8EFA</color>
     <color name="mimi_pink">#FFFCD9E1</color>
@@ -21,4 +22,5 @@
     <color name="eerie_black">#FF222222</color>
     <color name="gray">#FF828282</color>
     <color name="anti_flash_white">#FFF0F0F0</color>
+    <color name="night">#FF0B090A</color>
 </resources>

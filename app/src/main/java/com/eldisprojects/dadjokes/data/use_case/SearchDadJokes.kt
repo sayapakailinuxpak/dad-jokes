@@ -2,7 +2,6 @@ package com.eldisprojects.dadjokes.data.use_case
 
 import android.util.Log
 import com.eldisprojects.dadjokes.data.model.Joke
-import com.eldisprojects.dadjokes.data.model.JokeResult
 import com.eldisprojects.dadjokes.data.remote.DadJokeAPI
 import com.eldisprojects.dadjokes.data.remote.ResponseState
 import com.eldisprojects.dadjokes.data.remote.UIComponent
@@ -24,9 +23,6 @@ class SearchDadJokes(
             } catch (e: Exception) {
                 Log.d(TAG, "execute: emit $e")
                 emit(ResponseState.Error(uiComponent = UIComponent.Toast(e.message.toString())))
-            } finally {
-//                Log.d(TAG, "execute: emit loading")b
-//                emit(ResponseState.Loading(isLoading = false))
             }
         }
 

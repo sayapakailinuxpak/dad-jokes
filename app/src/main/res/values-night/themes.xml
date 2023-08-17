@@ -4,7 +4,7 @@
 <!--                <item name="android:windowTranslucentStatus">false</item>-->
 <!--        <item name="android:windowLightStatusBar">false</item>-->
 <!--        <item name="android:fitsSystemWindows">true</item>-->
-<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <item name="android:statusBarColor">@color/night</item>
     </style>
     <style name="Base.Theme.DadJokes" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->

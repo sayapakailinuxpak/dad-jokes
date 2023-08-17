@@ -1,11 +1,13 @@
 package com.eldisprojects.dadjokes.presentation.screen.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -28,19 +29,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
@@ -50,21 +47,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.eldisprojects.dadjokes.R
 import com.eldisprojects.dadjokes.data.model.Joke
 import com.eldisprojects.dadjokes.data.remote.UIComponent
-import com.eldisprojects.dadjokes.presentation.components.ActionButton
-import com.eldisprojects.dadjokes.presentation.components.BottomSheet
-import com.eldisprojects.dadjokes.presentation.components.DownloadConfirmationDialog
-import com.eldisprojects.dadjokes.presentation.components.JokeList
-import com.eldisprojects.dadjokes.presentation.components.JokeResultDialog
-import com.eldisprojects.dadjokes.presentation.components.LoadingBar
-import com.eldisprojects.dadjokes.presentation.components.NoDataSearchResultImage
-import com.eldisprojects.dadjokes.presentation.components.SearchBar
+import com.eldisprojects.dadjokes.presentation.component.ActionButton
+import com.eldisprojects.dadjokes.presentation.component.BottomSheet
+import com.eldisprojects.dadjokes.presentation.component.DownloadConfirmationDialog
+import com.eldisprojects.dadjokes.presentation.component.JokeList
+import com.eldisprojects.dadjokes.presentation.component.JokeResultDialog
+import com.eldisprojects.dadjokes.presentation.component.LoadingBar
+import com.eldisprojects.dadjokes.presentation.component.NoDataSearchResultImage
+import com.eldisprojects.dadjokes.presentation.component.SearchBar
 import com.eldisprojects.dadjokes.presentation.screen.result.ResultUiState
 import com.eldisprojects.dadjokes.presentation.screen.result.ResultViewModel
 import com.eldisprojects.dadjokes.presentation.screen.search.SearchUiState
@@ -74,7 +70,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 private const val TAG = "HomeScreen"
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen() {
     val homeViewModel: HomeViewModel = viewModel()
@@ -102,10 +98,8 @@ fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-//            .padding(horizontal = 20.dp)
             .background(color = MaterialTheme.colors.background)
             .clipToBounds()
-//            .border(width = 1.dp, color = Color.Black)
         ,
         verticalArrangement = verticalArrangementState,
         horizontalAlignment = Alignment.End
@@ -241,7 +235,6 @@ fun HomeScreen() {
 
             FloatingActionButton(
                 backgroundColor = if (isSystemInDarkTheme()) Color.White else colorResource(id = R.color.eerie_black),
-//                contentColor = if (isSystemInDarkTheme()) colorResource(id = R.color.azure) else Color.White,
                 elevation = FloatingActionButtonDefaults.elevation(
                     defaultElevation = 0.dp,
                     pressedElevation = 0.dp,
@@ -290,7 +283,19 @@ fun HomeScreen() {
         }
     }
 
-    BottomSheet(sheetState = sheetState)
+    BottomSheet(
+        sheetState = sheetState,
+        onClick = {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sayapakailinuxpak"))
+//            val intent = Intent(Inte)
+            try {
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                Log.d(TAG, "HomeScreen: ${e.printStackTrace()}")
+            }
+
+        }
+    )
 
     DownloadConfirmationDialog(
         title = "Love the joke?",
@@ -321,10 +326,4 @@ fun HomeScreen() {
             }
         }
     })
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun Preview() {
-//    HomeScreen()
 }

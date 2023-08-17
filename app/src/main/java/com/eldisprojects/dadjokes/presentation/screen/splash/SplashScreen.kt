@@ -22,9 +22,7 @@ import com.eldisprojects.dadjokes.R
 import com.eldisprojects.dadjokes.presentation.ui.theme.inconsolata
 
 @Composable
-fun SplashScreen(
-    onSplashScreenFinished: () -> Unit = {},
-) {
+fun SplashScreen() {
 
     Column(
         modifier = Modifier

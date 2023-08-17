@@ -4,6 +4,5 @@ import com.eldisprojects.dadjokes.data.model.Joke
 
 data class HomeUiState(
     val isLoading: Boolean = false,
-    val joke: Joke? = null,
-//    val errorMessage: String? = null
+    val joke: Joke? = null
 )

@@ -1,6 +1,5 @@
-package com.eldisprojects.dadjokes.presentation.components
+package com.eldisprojects.dadjokes.presentation.component
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,26 +11,23 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.eldisprojects.dadjokes.BuildConfig
 import com.eldisprojects.dadjokes.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheet(sheetState: ModalBottomSheetState, onClick: () -> Unit = {}) {
-    val context = LocalContext.current
-    val myGithub = context.getString(R.string.about_description).contains("sdjejjsd", ignoreCase = true)
     ModalBottomSheetLayout(
         sheetContent = {
             Column(
@@ -45,7 +41,13 @@ fun BottomSheet(sheetState: ModalBottomSheetState, onClick: () -> Unit = {}) {
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
-                    text = stringResource(id = R.string.about_description),
+                    text = AnnotatedString(
+                        stringResource(id = R.string.about_description),
+                        spanStyles = listOf(
+                            AnnotatedString.Range(SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline),46, 52)
+                        )
+//                        spanStyle = SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                    ),
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Medium,
                     lineHeight = 28.sp,
@@ -57,10 +59,9 @@ fun BottomSheet(sheetState: ModalBottomSheetState, onClick: () -> Unit = {}) {
                             onClick()
                         }
                 )
+                
+                
 
-//                AndroidView(factory = {
-//                    Text(text = )
-//                })
             }
 
         },
